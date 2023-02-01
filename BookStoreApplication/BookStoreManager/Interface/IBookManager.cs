@@ -11,7 +11,7 @@ namespace BookStoreManager.Interface
     {
         public BookModel AddBook(BookModel bookModel);
 
-        public BookModel UpdateBook(BookModel bookModel);
+        public BookModel UpdateBook(int BookID,BookModel bookModel);
 
         public bool DeleteBook(int BookID);
 

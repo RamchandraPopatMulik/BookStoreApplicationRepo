@@ -62,7 +62,7 @@ namespace BookStoreRepository.Repository
                 }
             }
         }
-        public BookModel UpdateBook(BookModel bookModel)
+        public BookModel UpdateBook(int BookID, BookModel bookModel)
         {
             SqlConnection connection = new SqlConnection(connectionString);
             try

@@ -27,11 +27,11 @@ namespace BookStoreManager.Manager
                 throw new Exception(ex.Message);
             }
         }
-        public BookModel UpdateBook(BookModel bookModel)
+        public BookModel UpdateBook(int BookID, BookModel bookModel)
         {
             try
             {
-                return this.bookRepository.UpdateBook(bookModel);
+                return this.bookRepository.UpdateBook(BookID,bookModel);
             }
             catch (Exception ex)
             {
