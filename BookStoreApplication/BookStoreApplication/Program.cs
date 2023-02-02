@@ -23,6 +23,8 @@ builder.Services.AddTransient<ICartRepository, CartRepository>();
 builder.Services.AddTransient<ICartManager, CartManager>();
 builder.Services.AddTransient<IWishListRepository, WishListRepository>();
 builder.Services.AddTransient<IWishlistManager, WishlistManager>();
+builder.Services.AddTransient<IAddressRepository, AddressRepository>();
+builder.Services.AddTransient<IAddressManager, AddressManager>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(s =>

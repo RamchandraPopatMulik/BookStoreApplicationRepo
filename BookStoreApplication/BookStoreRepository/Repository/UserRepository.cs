@@ -154,8 +154,8 @@ namespace BookStoreRepository.Repository
                             userSignUp.FullName = Reader.IsDBNull("FullName") ? string.Empty : Reader.GetString("FullName");
                         }
                         string token = GenerateJWTToken(emailID, userSignUp.UserID);
-                        //MSMQModel mSMQModel = new MSMQModel();
-                        //mSMQModel.SendMessage(token, emailID, userSignUp.FullName);
+                        MSMQModel mSMQModel = new MSMQModel();
+                        mSMQModel.SendMessage(token, emailID, userSignUp.FullName);
                         return token.ToString();
                     }
                     return null;
