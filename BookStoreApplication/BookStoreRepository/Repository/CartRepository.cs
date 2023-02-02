@@ -1,0 +1,183 @@
+﻿using BookStoreModel;
+using Microsoft.Extensions.Configuration;
+using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using BookStoreRepository.Interface;
+
+namespace BookStoreRepository.Repository
+{
+    public class CartRepository : ICartRepository
+    {
+       // private readonly IConfiguration config;
+        private string? connectionString;
+
+        public CartRepository(IConfiguration configuration, IConfiguration config)
+        {
+            connectionString = configuration.GetConnectionString("UserDBConnection");
+        }
+
+        public CartModel AddCart(CartModel cartModel)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            try
+            {
+                using (connection)
+                {
+                    SqlCommand command = new SqlCommand("SPAddCart", connection);
+
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@BookID", cartModel.BookID);
+                    command.Parameters.AddWithValue("@CartQuantity", cartModel.CartQuantity);
+                    command.Parameters.AddWithValue("@No_of_People_Rated", cartModel.UserID);
+                   
+
+                    connection.Open();
+                    int registerOrNot = command.ExecuteNonQuery();
+
+                    if (registerOrNot >= 1)
+                    {
+                        return cartModel;
+                    }
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                {
+                    connection.Close();
+                }
+            }
+        }
+        public CartModel UpdateCart(CartModel cartModel)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            try
+            {
+                using (connection)
+                {
+                    SqlCommand command = new SqlCommand("SPUpdateCart", connection);
+
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@CartID", cartModel.CartID);
+                    command.Parameters.AddWithValue("@CartQuantity", cartModel.CartQuantity);
+                    command.Parameters.AddWithValue("@UserID", cartModel.UserID);
+
+
+                    connection.Open();
+                    int registerOrNot = command.ExecuteNonQuery();
+
+                    if (registerOrNot >= 1)
+                    {
+                        return cartModel;
+                    }
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                {
+                    connection.Close();
+                }
+            }
+        }
+        public bool DeleteCart(int CartID, int UserID)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            try
+            {
+                using (connection)
+                {
+                    SqlCommand command = new SqlCommand("SPDeleteCart", connection);
+
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@CartID", CartID);
+                    command.Parameters.AddWithValue("@UserID", UserID);
+
+                    connection.Open();
+                    int registerOrNot = command.ExecuteNonQuery();
+
+                    if (registerOrNot >= 1)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                {
+                    connection.Close();
+                }
+            }
+        }
+        public List<CartModel> GetAllCart(int UserID)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            try
+            {
+                List<CartModel> cart = new List<CartModel>();
+                using (connection)
+                {
+                    SqlCommand command = new SqlCommand("SPGetAllCart", connection);
+
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@UserID", UserID);
+
+
+                    connection.Open();
+                    SqlDataReader Reader = command.ExecuteReader();
+
+                    if (Reader.HasRows)
+                    {
+                        while (Reader.Read())
+                        {
+                            CartModel book = new CartModel()
+                            {
+                                CartID = Reader.IsDBNull("CartID") ? 0 : Reader.GetInt32("CartID"),
+                                CartQuantity = Reader.IsDBNull("CartQuantity") ? 0 : Reader.GetInt32("CartQuantity"),
+                                BookID = Reader.IsDBNull("BookID") ? 0 : Reader.GetInt32("BookID"),
+                                UserID = Reader.IsDBNull("UserID") ? 0 : Reader.GetInt32("UserID"),
+
+                            };
+                            cart.Add(book);
+                        }
+                        return cart;
+                    }
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                {
+                    connection.Close();
+                }
+            }
+        }
+    }
+}
+

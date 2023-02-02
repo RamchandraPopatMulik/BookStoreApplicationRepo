@@ -9,13 +9,11 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using static BookStoreRepository.Repository.AdminRepsitory;
+using static BookStoreRepository.Repository.AdminRepository;
 using BookStoreRepository.Interface;
 
 namespace BookStoreRepository.Repository
 {
-    public class AdminRepsitory
-    {
         public class AdminRepository : IAdminRepository
         {
             private readonly IConfiguration config;
@@ -91,5 +89,5 @@ namespace BookStoreRepository.Repository
                 }
             }
         }
-    }
+    
 }

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
-using static BookStoreRepository.Repository.AdminRepsitory;
+using static BookStoreRepository.Repository.AdminRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +19,10 @@ builder.Services.AddTransient<IBookRepository, BookRepository>();
 builder.Services.AddTransient<IBookManager, BookManager>();
 builder.Services.AddTransient<IAdminRepository, AdminRepository>();
 builder.Services.AddTransient<IAdminManager, AdminManager>();
+builder.Services.AddTransient<ICartRepository, CartRepository>();
+builder.Services.AddTransient<ICartManager, CartManager>();
+builder.Services.AddTransient<IWishListRepository, WishListRepository>();
+builder.Services.AddTransient<IWishlistManager, WishlistManager>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(s =>
