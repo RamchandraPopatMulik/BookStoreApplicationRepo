@@ -19,11 +19,12 @@ namespace BookStoreApplication.Controllers
             this.cartManager = cartManager;
         }
         [HttpPost]
-        [Route("BookStore/AddBook")]
+        [Route("BookStore/AddCart")]
         public IActionResult AddCart(CartModel cartModel)
         {
             try
             {
+                cartModel.UserID = Convert.ToInt32(User.FindFirst("UserID").Value);
                 CartModel bookData = this.cartManager.AddCart(cartModel);
                 if (bookData != null)
                 {

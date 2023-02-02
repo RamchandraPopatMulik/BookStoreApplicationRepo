@@ -32,10 +32,9 @@ namespace BookStoreRepository.Repository
 
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@BookID", cartModel.BookID);
-                    command.Parameters.AddWithValue("@CartQuantity", cartModel.CartQuantity);
-                    command.Parameters.AddWithValue("@No_of_People_Rated", cartModel.UserID);
+                    command.Parameters.AddWithValue("@UserID", cartModel.UserID);
+                    command.Parameters.AddWithValue("@Cart_Quantity", cartModel.CartQuantity);
                    
-
                     connection.Open();
                     int registerOrNot = command.ExecuteNonQuery();
 
@@ -69,7 +68,7 @@ namespace BookStoreRepository.Repository
 
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@CartID", cartModel.CartID);
-                    command.Parameters.AddWithValue("@CartQuantity", cartModel.CartQuantity);
+                    command.Parameters.AddWithValue("@Cart_Quantity", cartModel.CartQuantity);
                     command.Parameters.AddWithValue("@UserID", cartModel.UserID);
 
 
@@ -154,7 +153,7 @@ namespace BookStoreRepository.Repository
                             CartModel book = new CartModel()
                             {
                                 CartID = Reader.IsDBNull("CartID") ? 0 : Reader.GetInt32("CartID"),
-                                CartQuantity = Reader.IsDBNull("CartQuantity") ? 0 : Reader.GetInt32("CartQuantity"),
+                                CartQuantity = Reader.IsDBNull("Cart_Quantity") ? 0 : Reader.GetInt32("Cart_Quantity"),
                                 BookID = Reader.IsDBNull("BookID") ? 0 : Reader.GetInt32("BookID"),
                                 UserID = Reader.IsDBNull("UserID") ? 0 : Reader.GetInt32("UserID"),
 
