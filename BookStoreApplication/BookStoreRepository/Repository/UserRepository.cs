@@ -69,9 +69,9 @@ namespace BookStoreRepository.Repository
                     command.Parameters.AddWithValue("@Password", EncryptPassword(userSignUp.Password));
 
                     connection.Open();
-                    int registerOrNot = command.ExecuteNonQuery();
+                    int SignOrNot = command.ExecuteNonQuery();
 
-                    if (registerOrNot >= 1)
+                    if (SignOrNot >= 1)
                     {
                         return userSignUp;
                     }

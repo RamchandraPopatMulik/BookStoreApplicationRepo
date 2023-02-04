@@ -33,9 +33,9 @@ namespace BookStoreRepository.Repository
                     command.Parameters.AddWithValue("@UserID", wishlistModel.UserID);
 
                     connection.Open();
-                    int registerOrNot = command.ExecuteNonQuery();
+                    int AddOrNot = command.ExecuteNonQuery();
 
-                    if (registerOrNot >= 1)
+                    if (AddOrNot >= 1)
                     {
                         return wishlistModel;
                     }
@@ -68,9 +68,9 @@ namespace BookStoreRepository.Repository
                     command.Parameters.AddWithValue("@UserID", UserID);
 
                     connection.Open();
-                    int registerOrNot = command.ExecuteNonQuery();
+                    int DeleteOrNot = command.ExecuteNonQuery();
 
-                    if (registerOrNot >= 1)
+                    if (DeleteOrNot >= 1)
                     {
                         return true;
                     }

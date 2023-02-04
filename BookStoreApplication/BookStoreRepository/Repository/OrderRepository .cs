@@ -34,9 +34,9 @@ namespace BookStoreRepository.Repository
                     command.Parameters.AddWithValue("@Date_Time", DateTime.Now);
 
                     connection.Open();
-                    int AddOrNot = command.ExecuteNonQuery();
+                    int PlaceOrNot = command.ExecuteNonQuery();
 
-                    if (AddOrNot >= 1)
+                    if (PlaceOrNot >= 1)
                     {
                         return placeOrderModel;
                     }
