@@ -60,6 +60,17 @@ namespace BookStoreManager.Manager
                 throw new Exception(ex.Message);
             }
         }
+        public CartModel GetCartByID(int CartID)
+        {
+            try
+            {
+                return this.cartRepository.GetCartByID(CartID);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        } 
     }
 }
 

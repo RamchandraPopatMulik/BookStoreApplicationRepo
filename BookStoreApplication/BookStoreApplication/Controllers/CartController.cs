@@ -94,6 +94,25 @@ namespace BookStoreApplication.Controllers
                 return this.BadRequest(new { success = false, message = ex.Message });
             }
         }
+        [Authorize(Roles = Role.User)]
+        [HttpGet]
+        [Route("BookStore/GetCartByID")]
+        public IActionResult GetCartByID(int CartID)
+        {
+            try
+            {
+                CartModel Cart = this.cartManager.GetCartByID(CartID);
+                if (Cart != null)
+                {
+                    return this.Ok(new { success = true, message = "Cart Get Successfully", result = Cart });
+                }
+                return this.Ok(new { success = true, message = "Enter Valid Cart ID" });
+            }
+            catch (Exception ex)
+            {
+                return this.BadRequest(new { success = false, message = ex.Message });
+            }
+        }
     }
 }
 

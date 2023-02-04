@@ -177,6 +177,50 @@ namespace BookStoreRepository.Repository
                 }
             }
         }
+        public CartModel GetCartByID(int CartID)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            try
+            {
+                using (connection)
+                {
+                    CartModel cart = new CartModel();
+                    SqlCommand command = new SqlCommand("SPGetCartByID", connection);
+
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@CartID", CartID);
+
+                    connection.Open();
+                    SqlDataReader Reader = command.ExecuteReader();
+
+                    if (Reader.HasRows)
+                    {
+                        while (Reader.Read())
+                        {
+
+                            cart.CartID = Reader.IsDBNull("CartID") ? 0 : Reader.GetInt32("CartID");
+                            cart.CartQuantity = Reader.IsDBNull("Cart_Quantity") ? 0 : Reader.GetInt32("Cart_Quantity");
+                            cart.BookID = Reader.IsDBNull("BookID") ? 0 : Reader.GetInt32("BookID");
+                            cart.UserID = Reader.IsDBNull("UserID") ? 0 : Reader.GetInt32("UserID");
+                            
+                        }
+                        return cart;
+                    }
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                {
+                    connection.Close();
+                }
+            }
+        }
     }
 }
 

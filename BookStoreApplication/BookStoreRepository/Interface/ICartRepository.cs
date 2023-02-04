@@ -16,5 +16,7 @@ namespace BookStoreRepository.Interface
         public bool DeleteCart(int CartID, int UserID);
 
         public List<CartModel> GetAllCart(int UserID);
+
+        public CartModel GetCartByID(int CartID);
     }
 }
